@@ -23,7 +23,7 @@ namespace HtmlToPdf.Controllers
         [HttpPost]
         public IActionResult RenderPdf(string url)
         {
-            return Redirect($"https://url-to-pdf-api.herokuapp.com/api/render?url={{url}}");
+            return Redirect($"https://pdf-render.azurewebsites.net/api/render?url={url}");
         }
 
         public IActionResult Privacy()
