@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+    <!-- Document Meta
+    ============================================= -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--IE Compatibility Meta-->
+    <meta name="author" content="zytheme" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Multi-purpose Makerting html5 landing page">
+    <link href="/assets/images/favicon/favicon.ico" rel="icon">
+    <!-- Fonts
+    ============================================= -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700' rel='stylesheet' type='text/css'>
+    <!-- Stylesheets
+    ============================================= -->
+    <link href="/assets/css/external.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <title>@ViewData["Title"] - Html To Pdf</title>
+</head>
+<body class="body-scroll">
+    <!-- Document Wrapper
+    ============================================= -->
+    <div id="wrapper" class="wrapper clearfix">
+        <!-- Header
+        ============================================= -->
+        <header id="navbar-spy" class="header header-1 header-transparent header-fixed">
+            <nav id="primary-menu" class="navbar navbar-expand-lg navbar-dark">
+                <div class="container">
+                    <a class="navbar-brand" href="index-2.html">
+                        <img class="logo logo-dark" src="/assets/images/logo/logo-dark.png" alt="Kolaso Logo">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="toogle-inner"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarContent">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="active">
+                                <a data-scroll="scrollTo" href="#hero">home</a>
+                            </li>
+                            <li>
+                                <a data-scroll="scrollTo" href="#feature2">feature</a>
+                            </li>
+                            <li>
+                                <a data-scroll="scrollTo" href="#reviews">reviews</a>
+                            </li>
+                            <li>
+                                <a data-scroll="scrollTo" href="#clients">clients</a>
+                            </li>
+                            <li>
+                                <a data-scroll="scrollTo" href="#cta">signup</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--/.nav-collapse -->
+                </div>
+            </nav>
+        </header>
+        @RenderBody()
+
+        <footer id="footer" class="footer">
+            <div class="footer-top">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-md-12 col-lg-4">
+                            <div class="footer-logo">
+                                <img src="/assets/images/logo/logo-dark.png" alt="Logo" height="30">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-8">
+                            <div class="footer-menu">
+                                <a href="#">home</a>
+                                <a href="#">Features</a>
+                                <a href="#">Services</a>
+                                <a href="#">home</a>
+                                <a href="#">Testimonials</a>
+                                <a href="#">Pricing</a>
+                                <a href="#">Contact</a>
+                            </div>
+                        </div>
+                    </div><!-- .row end -->
+                    <div class="row">
+                        <div class="col-12 col-md-12 col-lg-6">
+                            <div class="footer-info">
+                                <p>support@pdfinary.com</p>
+                                <p>+61 525 240 310</p>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-6">
+                            <div class="footer-social">
+                                <a class="twitter" href="#">
+                                    <i class="fa fa-twitter"></i>
+                                </a>
+                                <a class="facebook" href="#">
+                                    <i class="fa fa-facebook"></i>
+                                </a>
+                                <a class="dribbble" href="#">
+                                    <i class="fa fa-dribbble"></i>
+                                </a>
+                                <a class="google" href="#">
+                                    <i class="fa fa-google-plus"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- .row end -->
+                </div>
+                <!-- .container end -->
+            </div>
+
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <hr>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="footer-copyright">
+                                <span>&copy; Zytheme 2019, All Rights Reserved.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- .row end -->
+                </div>
+                <!-- .container end -->
+            </div>
+            <!-- .footer-bottom end -->
+        </footer>
+    </div>
+    <!-- #wrapper end -->
+    <!-- Footer Scripts
+    ============================================= -->
+    <script src="/assets/js/jquery-3.3.1.min.js"></script>
+    <script src="/assets/js/plugins.js"></script>
+    <script src="/assets/js/functions.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
