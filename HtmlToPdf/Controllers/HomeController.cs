@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using HtmlToPdf.Models;
+using System.Net;
+using System.IO;
 
 namespace HtmlToPdf.Controllers
 {
@@ -23,8 +25,22 @@ namespace HtmlToPdf.Controllers
         [HttpPost]
         public IActionResult RenderPdf(string url)
         {
-            return Redirect($"https://pdf-render-pdfinary.herokuapp.com/api/render?url={url}");
+            try
+            {
+                using (var client = new WebClient())
+                {
+                    var pdfMemoryStream = new MemoryStream(client.DownloadData($"https://pdf-render-pdfinary.herokuapp.com/api/render?url={url}&scrollPage=true"));
+
+                    return new FileStreamResult(pdfMemoryStream, "application/pdf");
+                }
+            }
+            catch
+            {
+                return Redirect($"https://pdf-render-pdfinary.herokuapp.com/api/render?url={url}");
+            }
         }
+
+        
 
         public IActionResult Privacy()
         {
