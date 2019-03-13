@@ -1,14 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
+﻿using HtmlToPdf.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.Numerics;
+using System.Security.Cryptography;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Threading.Tasks;
 
 namespace HtmlToPdf.Areas.Identity.Pages.Account
 {
@@ -37,6 +40,8 @@ namespace HtmlToPdf.Areas.Identity.Pages.Account
 
         public string ReturnUrl { get; set; }
 
+        public int SubscriptionTypeId { get; set; }
+
         public class InputModel
         {
             [Required]
@@ -56,17 +61,43 @@ namespace HtmlToPdf.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
         }
 
-        public void OnGet(int? SubscriptionId, string returnUrl = null)
+        public void OnGet(int subscriptionTypeId, string returnUrl = null)
         {
+            SubscriptionTypeId = subscriptionTypeId;
             ReturnUrl = returnUrl;
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        public static string CreateApiKey()
+        {
+            var bytes = new byte[256 / 8];
+            using (var random = RandomNumberGenerator.Create())
+            {
+                random.GetBytes(bytes);
+            }
+
+            return ToBase62String(bytes);
+
+        }
+
+        private static string ToBase62String(byte[] toConvert)
+        {
+            const string alphabet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            var dividend = new BigInteger(toConvert);
+            var builder = new StringBuilder();
+            while (dividend != 0)
+            {
+                dividend = BigInteger.DivRem(dividend, alphabet.Length, out var remainder);
+                builder.Insert(0, alphabet[Math.Abs(((int)remainder))]);
+            }
+            return builder.ToString();
+        }
+
+        public async Task<IActionResult> OnPostAsync(int subscriptionTypeId, string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, ApiKey = CreateApiKey(), SubscriptionTypeId = subscriptionTypeId };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
@@ -83,7 +114,8 @@ namespace HtmlToPdf.Areas.Identity.Pages.Account
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    return LocalRedirect(returnUrl);
+
+                    return RedirectToAction("Index", "Dashboard", new { area = "Client" });
                 }
                 foreach (var error in result.Errors)
                 {

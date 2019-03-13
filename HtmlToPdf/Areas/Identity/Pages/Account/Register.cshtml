@@ -33,7 +33,7 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="hero-headline">Get Started</div>
-                        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                        <form asp-route-returnUrl="@Model.ReturnUrl" asp-route-subscriptionTypeId="@Model.SubscriptionTypeId" method="post">
 
                             <div class="form-group">
                                 <label asp-for="Input.Email"></label>

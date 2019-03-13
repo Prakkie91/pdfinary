@@ -24,18 +24,18 @@ namespace HtmlToPdf.Controllers
         {
             try
             {
-                Uri tmp = new Uri(url.Trim());
+                var tmp = new Uri(url.Trim());
 
                 Console.WriteLine("Protocol: {0}", tmp.Scheme);
                 Console.WriteLine("Host: {0}", tmp.Host);
                 Console.WriteLine("Path: {0}", tmp.AbsolutePath);
                 Console.WriteLine("Query: {0}", tmp.Query);
 
-                string parsedUrl = $"{tmp.Scheme}://{tmp.Host}{tmp.AbsolutePath}{tmp.Query}";
+                var parsedUrl = $"{tmp.Scheme}://{tmp.Host}{tmp.AbsolutePath}{tmp.Query}";
 
-                using (WebClient client = new WebClient())
+                using (var client = new WebClient())
                 {
-                    MemoryStream pdfMemoryStream = new MemoryStream(client.DownloadData($"https://pdf-render-pdfinary.herokuapp.com/api/render?url={parsedUrl}&scrollPage=true&emulateScreenMedia=true&pdf.scale=0.7"));
+                    var pdfMemoryStream = new MemoryStream(client.DownloadData($"https://pdf-render-pdfinary.herokuapp.com/api/render?url={parsedUrl}&scrollPage=true&emulateScreenMedia=true&pdf.scale=0.7"));
 
                     return new FileStreamResult(pdfMemoryStream, "application/pdf");
                 }
