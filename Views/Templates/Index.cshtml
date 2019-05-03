@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Pdfinary.Models.Template>
+
+@{
+    ViewData["Title"] = "TEMPLATES";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right">
+            <a class="btn btn-primary" asp-action="Create">Create New</a>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<br />
+@foreach (var template in Model)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="grid simple vertical green">
+                <div class="grid-body no-border no-padding">
+                    <table class="table no-margin">
+                        <tr>
+                            <td width="150">
+                                <iframe style="width:100%;height:100%" src="/Templates/Render/@template.Id?draft=false"></iframe>
+                            </td>
+                            <td width="150">
+                                <iframe style="width:100%;height:100%" src="/Templates/Render/@template.Id?draft=true"></iframe>
+                            </td>
+                            <td>
+                                <h4>@template.Name</h4>
+                                <p>@template.Description</p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+}

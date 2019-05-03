@@ -1,0 +1,153 @@
+﻿@model IEnumerable<Pdfinary.Models.Render>
+
+@{
+    ViewData["Title"] = "DASHBOARD";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="tiles blue    m-b-10">
+            <div class="tiles-body">
+                <div class="controller">
+                    <a href="javascript:;" class="reload"></a>
+                    <a href="javascript:;" class="remove"></a>
+                </div>
+                <h4 class="text-black no-margin semi-bold">Monthly Renders</h4>
+                <h2 class="text-white bold "><span data-animation-duration="900" data-value="@Model.Count()" class="animate-number">@Model.Count()</span></h2>
+                <h4 class="text-black semi-bold  "><strong>@string.Format("{0}", 100 - Model.Count())</strong> Renders Remaining</h4>
+
+            </div>
+        </div>
+        <div class="tiles yellow m-b-10">
+            <div class="tiles-body">
+                <div class="controller">
+                    <a href="javascript:;" class="reload"></a>
+                    <a href="javascript:;" class="remove"></a>
+                </div>
+                <h4 class="text-black no-margin semi-bold">Hourly Renders</h4>
+                <h2 class="text-white bold "><span data-animation-duration="900" data-value="@Model.Where(a => a.CreateDate >= DateTime.UtcNow.AddHours(-1)).Count()" class="animate-number">@Model.Where(a => a.CreateDate >= DateTime.UtcNow.AddHours(-1)).Count()</span></h2>
+                <h4 class="text-black semi-bold  "><strong>@string.Format("{0}", 20 - Model.Where(a => a.CreateDate >= DateTime.UtcNow.AddHours(-1)).Count())</strong> Renders Remaining</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="grid simple">
+            <div class="grid-title no-border">
+                <h4>Rendering <span class="semi-bold">Volume</span></h4>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse"></a>
+                    <a href="#grid-config" data-toggle="modal" class="config"></a>
+                    <a href="javascript:;" class="reload"></a>
+                    <a href="javascript:;" class="remove"></a>
+                </div>
+            </div>
+            <div class="grid-body no-border">
+                <div class="tiles white no-margin">
+                    <!-- HTML -->
+                    <div id="chartdiv"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.Count() != 0)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="grid simple">
+                <div class="grid-title no-border">
+                    <h4>Latest <span class="semi-bold">Renders</span></h4>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse"></a>
+                        <a href="#grid-config" data-toggle="modal" class="config"></a>
+                        <a href="javascript:;" class="reload"></a>
+                        <a href="javascript:;" class="remove"></a>
+                    </div>
+                </div>
+                <div class="grid-body no-border">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Render Date
+                                </th>
+                                <th>
+                                    Render Type
+                                </th>
+                                <th>
+                                    Preview
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.OrderByDescending(a => a.CreateDate).Take(10))
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CreateDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.RenderType)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.BlobUrl)
+                                    </td>
+
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts{
+    <!-- Styles -->
+    <style>
+        #chartdiv {
+            width: 100%;
+            height: 400px;
+        }
+    </style>
+
+    <!-- Resources -->
+    <script src="https://www.amcharts.com/lib/4/core.js"></script>
+    <script src="https://www.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://www.amcharts.com/lib/4/themes/kelly.js"></script>
+    <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+
+    <!-- Chart code -->
+    <script>
+        am4core.ready(function () {
+
+            // Themes begin
+            am4core.useTheme(am4themes_kelly);
+            am4core.useTheme(am4themes_animated);
+            // Themes end
+
+            var chart = am4core.create("chartdiv", am4charts.XYChart);
+            chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
+            chart.colorField = "#333"
+
+            chart.data = @Json.Serialize(Model.OrderBy(a=>a.CreateDate).GroupBy(a=>a.CreateDate.Date.ToShortDateString()).Select(a=> new { date = a.Key, value = a.Count() }));
+
+                var categoryAxis = chart.xAxes.push(new am4charts.DateAxis());
+                categoryAxis.fontSize = 11;
+                categoryAxis.parseDates = true;
+
+                var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+                valueAxis.min = 0;
+
+                var series = chart.series.push(new am4charts.ColumnSeries());
+                series.dataFields.valueY = "value";
+                series.dataFields.dateX = "date";
+                series.columns.template.tooltipText = "{date}: {value}";
+                series.columns.template.tooltipY = 0;
+
+            }); // end am4core.ready()
+    </script>
+}
