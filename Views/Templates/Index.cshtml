@@ -22,14 +22,25 @@
                     <table class="table no-margin">
                         <tr>
                             <td width="150">
-                                <iframe style="width:100%;height:100%" src="/Templates/Render/@template.Id?draft=false"></iframe>
+                                <div class="thumbnail-container">
+                                    <div class="thumbnail">
+                                        <iframe src="/Templates/Render/@template.Id?draft=false" frameborder="0"></iframe>
+                                    </div>
+                                </div>
                             </td>
                             <td width="150">
-                                <iframe style="width:100%;height:100%" src="/Templates/Render/@template.Id?draft=true"></iframe>
+                                <div class="thumbnail-container">
+                                    <div class="thumbnail">
+                                        <iframe src="/Templates/Render/@template.Id?draft=true" frameborder="0"></iframe>
+                                    </div>
+                                </div>
                             </td>
                             <td>
                                 <h4>@template.Name</h4>
                                 <p>@template.Description</p>
+                            </td>
+                            <td width="100" style="vertical-align:middle">
+                                <a asp-action="SetDraftToProduction" asp-route-id="@template.Id" class="btn btn-danger">Set Draft To Production</a>
                             </td>
                             <td width="100" style="vertical-align:middle">
                                 <a asp-action="Edit" asp-route-id="@template.Id" class="btn btn-success">Edit</a>
@@ -42,3 +53,28 @@
 
     </div>
 }
+<style>
+.thumbnail iframe {
+  width: 650px;
+  height: 768px;
+  border:solid 1px;
+}
+.thumbnail {
+  position: relative;
+  -ms-zoom: 0.174;
+  -moz-transform: scale(0.174);
+  -moz-transform-origin: 0 0;
+  -o-transform: scale(0.174);
+  -o-transform-origin: 0 0;
+  -webkit-transform: scale(0.174);
+  -webkit-transform-origin: 0 0;
+}
+
+.thumbnail-container {
+  width: 115px;
+  height: 136px;
+  display: inline-block;
+  overflow: hidden;
+  position: relative;
+}
+</style>
