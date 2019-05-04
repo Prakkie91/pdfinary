@@ -32,6 +32,9 @@
     <Content Update="Areas\Identity\Views\Shared\_Layout.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\QuickStart\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Renders\Preview.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

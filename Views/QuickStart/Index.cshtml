@@ -1,0 +1,113 @@
+﻿@{
+    ViewData["Title"] = "Quick Start";
+    var subscription = (Subscription)ViewBag.Subscription;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="grid simple ">
+            <div class="grid-title">
+                <h4>URL TO PDF</h4>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse"></a>
+                    <a href="#grid-config" data-toggle="modal" class="config"></a>
+                    <a href="javascript:;" class="reload"></a>
+                    <a href="javascript:;" class="remove"></a>
+                </div>
+            </div>
+            <div class="grid-body">
+                <div class="scroller scrollbar-hidden" data-height="220px">
+                    <h3>Render PDF from <span class="semi-bold">Url</span></h3>
+                    <p>The simplest way to render a PDF is to create is to simply pass the url to convert to pdf.</p>
+                    <form href="http://pdfinary.com/api/Render/RenderUrl" method="get">
+                        <input name="key" type="hidden" value="@subscription.ApiKey">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Url</label><span class="help">e.g. "https://google.co.za"</span>
+                                    <div class="input-with-icon right">
+                                        <input class="form-control" name="url" type="url" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <input name="scale" class="form-control" value="0.7" />
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Scroll Page</label><span class="help">should the renderer scroll the url</span>
+                                <select name="scrollPage" class="form-control">
+                                    <option value="true">True</option>
+                                    <option value="false">False</option>
+                                </select>
+                            </div>
+                        </div>
+                      
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label">Emulate Screen Media</label><span class="help">should the screen media version or print version of the page.</span>
+                                <select name="emulateScreenMedia" class="form-control">
+                                    <option value="true">True</option>
+                                    <option value="false">False</option>
+                                </select>
+                            </div>
+                         
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Render</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="grid simple ">
+            <div class="grid-title">
+                <h4>FORM DATA TO PDF</h4>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse"></a>
+                    <a href="#grid-config" data-toggle="modal" class="config"></a>
+                    <a href="javascript:;" class="reload"></a>
+                    <a href="javascript:;" class="remove"></a>
+                </div>
+            </div>
+            <div class="grid-body">
+                <div class="scroller scrollbar-hidden" data-height="220px">
+                    <h3>Scroll is <span class="semi-bold">hidden</span></h3>
+                    <h4><span class="semi-bold">Open Me</span>, Light , <span class="semi-bold">Bold</span> , <i>Everything</i></h4>
+                    <p>The overflow is clipped, and the rest of the content will be invisible, Play it ». scroll, The overflow is clipped, but a scroll-bar is added to see the rest of the </p>
+                    <p> default, the textarea element comes with a vertical scrollbar (and maybe even a horizontal scrollbar). This vertical scrollbar enables the user to continue entering and reviewing their text (by scrolling up and down).</p>
+                    <p>The scroll event is sent to an element when the user scrolls to a different place in the element. It applies to window objects, but also to scrollable frames and elements with the overflow CSS property set to scroll (or auto when the element's explicit height or width is less than the height or width of its contents).</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="grid simple ">
+            <div class="grid-title">
+                <h4>API TO PDF</h4>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse"></a>
+                    <a href="#grid-config" data-toggle="modal" class="config"></a>
+                    <a href="javascript:;" class="reload"></a>
+                    <a href="javascript:;" class="remove"></a>
+                </div>
+            </div>
+            <div class="grid-body">
+                <div class="scroller scrollbar-hidden" data-height="220px">
+                    <h3>Scroll is <span class="semi-bold">hidden</span></h3>
+                    <h4><span class="semi-bold">Open Me</span>, Light , <span class="semi-bold">Bold</span> , <i>Everything</i></h4>
+                    <p>The overflow is clipped, and the rest of the content will be invisible, Play it ». scroll, The overflow is clipped, but a scroll-bar is added to see the rest of the </p>
+                    <p> default, the textarea element comes with a vertical scrollbar (and maybe even a horizontal scrollbar). This vertical scrollbar enables the user to continue entering and reviewing their text (by scrolling up and down).</p>
+                    <p>The scroll event is sent to an element when the user scrolls to a different place in the element. It applies to window objects, but also to scrollable frames and elements with the overflow CSS property set to scroll (or auto when the element's explicit height or width is less than the height or width of its contents).</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
