@@ -94,9 +94,9 @@ namespace Pdfinary.Controllers
                     return new FileStreamResult(pdfMemoryStream, "application/pdf");
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
         }
 
@@ -145,9 +145,9 @@ namespace Pdfinary.Controllers
                     return new FileStreamResult(pdfMemoryStream, "application/pdf");
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
         }
 
