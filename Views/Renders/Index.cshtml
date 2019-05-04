@@ -42,10 +42,8 @@
                                     @Html.DisplayFor(modelItem => item.Template.Id)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.BlobUrl)
+                                    <a class="btn btn-primary" href="@item.BlobUrl">Preview</a>
                                 </td>
-
-
                             </tr>
                         }
                     </tbody>
