@@ -27,6 +27,17 @@ namespace Pdfinary.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        [HttpPost]
+        public async Task<IActionResult> SetDraftToProduction(int id)
+        {
+            var template = _context.Templates.FirstOrDefault(a => a.Id == id);
+            template.ProductionHtml = template.DraftHtml;
+            _context.Update(template);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
         public async Task<IActionResult> Render(int id, bool draft)
         {
             var template = _context.Templates.FirstOrDefault(a => a.Id == id);
@@ -40,7 +51,7 @@ namespace Pdfinary.Controllers
             else
             {
                 ViewBag.Html = template.ProductionHtml;
-               
+
             }
             return View();
         }

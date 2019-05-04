@@ -40,7 +40,10 @@
                                 <p>@template.Description</p>
                             </td>
                             <td width="100" style="vertical-align:middle">
-                                <a asp-action="SetDraftToProduction" asp-route-id="@template.Id" class="btn btn-danger">Set Draft To Production</a>
+                                <form asp-action="SetDraftToProduction">
+                                    <input name="id" value="@template.Id" type="hidden" />
+                                    <button type="submit" class="btn btn-danger">Set Draft To Production</button>
+                                </form>
                             </td>
                             <td width="100" style="vertical-align:middle">
                                 <a asp-action="Edit" asp-route-id="@template.Id" class="btn btn-success">Edit</a>
@@ -54,27 +57,28 @@
     </div>
 }
 <style>
-.thumbnail iframe {
-  width: 650px;
-  height: 768px;
-  border:solid 1px;
-}
-.thumbnail {
-  position: relative;
-  -ms-zoom: 0.174;
-  -moz-transform: scale(0.174);
-  -moz-transform-origin: 0 0;
-  -o-transform: scale(0.174);
-  -o-transform-origin: 0 0;
-  -webkit-transform: scale(0.174);
-  -webkit-transform-origin: 0 0;
-}
+    .thumbnail iframe {
+        width: 650px;
+        height: 768px;
+        border: solid 1px;
+    }
 
-.thumbnail-container {
-  width: 115px;
-  height: 136px;
-  display: inline-block;
-  overflow: hidden;
-  position: relative;
-}
+    .thumbnail {
+        position: relative;
+        -ms-zoom: 0.174;
+        -moz-transform: scale(0.174);
+        -moz-transform-origin: 0 0;
+        -o-transform: scale(0.174);
+        -o-transform-origin: 0 0;
+        -webkit-transform: scale(0.174);
+        -webkit-transform-origin: 0 0;
+    }
+
+    .thumbnail-container {
+        width: 115px;
+        height: 136px;
+        display: inline-block;
+        overflow: hidden;
+        position: relative;
+    }
 </style>
