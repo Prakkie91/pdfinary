@@ -1,13 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Pdfinary.Data;
 using Pdfinary.Models;
 using Pdfinary.Models.ApiModels;
+using Pdfinary.Services;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Security.Cryptography;
+using System.Threading.Tasks;
 
 namespace Pdfinary.Controllers
 {
@@ -16,10 +19,12 @@ namespace Pdfinary.Controllers
     public class RenderApiController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly BlobStorageService _blobStorageService;
 
-        public RenderApiController(ApplicationDbContext context)
+        public RenderApiController(ApplicationDbContext context, BlobStorageService blobStorageService)
         {
             _context = context;
+            _blobStorageService = blobStorageService;
         }
 
         // GET: api/RenderApi
@@ -34,23 +39,109 @@ namespace Pdfinary.Controllers
             return _context.Renders;
         }
 
-
-        // GET: api/RenderApi/5
         [HttpGet("RenderUrl")]
-        public async Task<IActionResult> RenderUrl(string url, string key)
+        public async Task<IActionResult> RenderUrl(string url, string key, bool scrollPage = true, bool emulateScreenMedia = true, double scale = 0.7)
         {
-         
+            try
+            {
+                Subscription subscription = _context.Subscriptions.FirstOrDefault(a => a.ApiKey == key);
 
-            return Ok();
+                Uri tmp = new Uri(url.Trim());
+
+                Console.WriteLine("Protocol: {0}", tmp.Scheme);
+                Console.WriteLine("Host: {0}", tmp.Host);
+                Console.WriteLine("Path: {0}", tmp.AbsolutePath);
+                Console.WriteLine("Query: {0}", tmp.Query);
+
+                string parsedUrl = $"{tmp.Scheme}://{tmp.Host}{tmp.AbsolutePath}{tmp.Query}";
+
+                byte[] randomKey = new byte[32];
+                using (RandomNumberGenerator generator = RandomNumberGenerator.Create())
+                {
+                    generator.GetBytes(randomKey);
+                }
+
+                string randomFileName = Convert.ToBase64String(randomKey);
+
+                string filename = $"{randomFileName}.pdf";
+
+                Render render = new Render()
+                {
+                    CreateDate = DateTime.UtcNow,
+                    Data = JsonConvert.SerializeObject(new
+                    {
+                        Url = url
+                    }),
+                    RenderType = RenderType.Url,
+                    SubscriptionId = subscription.Id,
+                    BlobUrl = $"https://pdfinary.blob.core.windows.net/pdfinary/{filename}"
+                };
+
+                _context.Renders.Add(render);
+                _context.SaveChanges();
+
+                using (WebClient client = new WebClient())
+                {
+                    MemoryStream pdfMemoryStream = new MemoryStream(client.DownloadData($"https://pdf-render-pdfinary.herokuapp.com/api/render?url={parsedUrl}&scrollPage={scrollPage}&emulateScreenMedia={emulateScreenMedia}&pdf.scale={scale}"));
+
+                    _blobStorageService.UploadFileAsync(pdfMemoryStream, filename);
+
+
+                    return new FileStreamResult(pdfMemoryStream, "application/pdf");
+                }
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
 
         // PUT: api/RenderApi/5
         [HttpPost("RenderTemplate")]
-        public async Task<IActionResult> RenderTemplate([FromRoute] int id, [FromBody] RenderTemplateRequest render)
+        public async Task<IActionResult> RenderTemplate([FromBody] RenderTemplateRequest data)
         {
-         
+            try
+            {
+                Subscription subscription = _context.Subscriptions.FirstOrDefault(a => a.ApiKey == data.Key);
 
-            return NoContent();
+                byte[] randomKey = new byte[32];
+                using (RandomNumberGenerator generator = RandomNumberGenerator.Create())
+                {
+                    generator.GetBytes(randomKey);
+                }
+
+                string randomFileName = Convert.ToBase64String(randomKey);
+
+                string filename = $"{randomFileName}.pdf";
+
+                Render render = new Render()
+                {
+                    CreateDate = DateTime.UtcNow,
+                    Data = JsonConvert.SerializeObject(data.Data),
+                    RenderType = RenderType.Url,
+                    SubscriptionId = subscription.Id,
+                    TemplateId = data.TemplateId,
+                    BlobUrl = $"https://pdfinary.blob.core.windows.net/pdfinary/{filename}"
+                };
+
+                _context.Renders.Add(render);
+                _context.SaveChanges();
+
+                using (WebClient client = new WebClient())
+                {
+                    string urlOut = $"http://pdfinary.com/Renders/Preview/{render.Id}";
+
+                    MemoryStream pdfMemoryStream = new MemoryStream(client.DownloadData($"https://pdf-render-pdfinary.herokuapp.com/api/render?url={urlOut}&scrollPage=true&emulateScreenMedia=true&pdf.scale=0.7"));
+
+                    _blobStorageService.UploadFileAsync(pdfMemoryStream, filename);
+
+                    return new FileStreamResult(pdfMemoryStream, "application/pdf");
+                }
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
 
     }

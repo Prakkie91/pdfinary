@@ -13,6 +13,7 @@ using Pdfinary.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Pdfinary.Models;
+using Pdfinary.Services;
 
 namespace Pdfinary
 {
@@ -40,6 +41,8 @@ namespace Pdfinary
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<ApplicationUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddTransient<BlobStorageService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

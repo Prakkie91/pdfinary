@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Pdfinary.Data;
 using Pdfinary.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Pdfinary.Controllers
 {
@@ -22,8 +19,17 @@ namespace Pdfinary.Controllers
         // GET: Renders
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Renders.Include(r => r.Template);
+            Microsoft.EntityFrameworkCore.Query.IIncludableQueryable<Render, Template> applicationDbContext = _context.Renders.Include(r => r.Template);
             return View(await applicationDbContext.ToListAsync());
+        }
+
+
+        public async Task<IActionResult> Preview(int id)
+        {
+            Render render = _context.Renders.Include(a => a.Template).FirstOrDefault(a => a.Id == id);
+
+            return View(render.Template.ProductionHtml);
+
         }
     }
 }
