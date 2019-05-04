@@ -59,7 +59,6 @@ namespace Pdfinary.Controllers
         // GET: Templates/Create
         public IActionResult Create()
         {
-            ViewData["SubscriptionId"] = new SelectList(_context.Subscriptions, "Id", "Id");
             return View();
         }
 
@@ -68,15 +67,16 @@ namespace Pdfinary.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,SubscriptionId,Name,Description,ProductionHtml,DraftHtml")] Template template)
+        public async Task<IActionResult> Create(Template template)
         {
             if (ModelState.IsValid)
             {
+                template.SubscriptionId = _subscriptionId;
                 _context.Add(template);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SubscriptionId"] = new SelectList(_context.Subscriptions, "Id", "Id", template.SubscriptionId);
+
             return View(template);
         }
 
