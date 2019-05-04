@@ -31,14 +31,18 @@ namespace Pdfinary.Controllers
         {
             var template = _context.Templates.FirstOrDefault(a => a.Id == id);
 
+            ViewBag.Html = template.DraftHtml;
+
             if (draft)
             {
-                return View(template.DraftHtml);
+                ViewBag.Html = template.DraftHtml;
             }
             else
             {
-                return View(template.ProductionHtml);
+                ViewBag.Html = template.ProductionHtml;
+               
             }
+            return View();
         }
 
         // GET: Templates/Create

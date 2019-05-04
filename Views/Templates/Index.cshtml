@@ -31,6 +31,9 @@
                                 <h4>@template.Name</h4>
                                 <p>@template.Description</p>
                             </td>
+                            <td width="100" style="vertical-align:middle">
+                                <a asp-action="Edit" asp-route-id="@template.Id" class="btn btn-success">Edit</a>
+                            </td>
                         </tr>
                     </table>
                 </div>
