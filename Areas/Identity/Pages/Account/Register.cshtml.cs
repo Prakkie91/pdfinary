@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography;
 using System.Text.Encodings.Web;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -86,6 +87,9 @@ namespace Pdfinary.Areas.Identity.Pages.Account
                     using (var generator = RandomNumberGenerator.Create())
                         generator.GetBytes(key);
                     string apiKey = Convert.ToBase64String(key);
+
+                    Regex rgx = new Regex("[^a-zA-Z0-9 -]");
+                    apiKey = rgx.Replace(apiKey, "");
 
                     Subscription subscription = new Subscription()
                     {

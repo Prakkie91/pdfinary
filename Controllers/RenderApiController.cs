@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Pdfinary.Controllers
@@ -63,6 +64,9 @@ namespace Pdfinary.Controllers
 
                 string randomFileName = Convert.ToBase64String(randomKey);
 
+                Regex rgx = new Regex("[^a-zA-Z0-9 -]");
+                randomFileName = rgx.Replace(randomFileName, "");
+
                 string filename = $"{randomFileName}.pdf";
 
                 Render render = new Render()
@@ -111,6 +115,9 @@ namespace Pdfinary.Controllers
                 }
 
                 string randomFileName = Convert.ToBase64String(randomKey);
+
+                Regex rgx = new Regex("[^a-zA-Z0-9 -]");
+                randomFileName = rgx.Replace(randomFileName, "");
 
                 string filename = $"{randomFileName}.pdf";
 

@@ -2,17 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Pdfinary.Data;
 using Pdfinary.Models;
 
 namespace Pdfinary.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class SettingsController : ControllerBase
+    public class SettingsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
@@ -21,101 +19,130 @@ namespace Pdfinary.Controllers
             _context = context;
         }
 
-        // GET: api/Settings
-        [HttpGet]
-        public IEnumerable<Subscription> GetSubscriptions()
+        // GET: Settings
+        public async Task<IActionResult> Index()
         {
-            return _context.Subscriptions;
+            return View(await _context.Subscriptions.ToListAsync());
         }
 
-        // GET: api/Settings/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetSubscription([FromRoute] int id)
+        // GET: Settings/Details/5
+        public async Task<IActionResult> Details(int? id)
         {
-            if (!ModelState.IsValid)
+            if (id == null)
             {
-                return BadRequest(ModelState);
+                return NotFound();
             }
 
-            var subscription = await _context.Subscriptions.FindAsync(id);
-
+            var subscription = await _context.Subscriptions
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (subscription == null)
             {
                 return NotFound();
             }
 
-            return Ok(subscription);
+            return View(subscription);
         }
 
-        // PUT: api/Settings/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutSubscription([FromRoute] int id, [FromBody] Subscription subscription)
+        // GET: Settings/Create
+        public IActionResult Create()
         {
-            if (!ModelState.IsValid)
+            return View();
+        }
+
+        // POST: Settings/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,Company,ApiKey")] Subscription subscription)
+        {
+            if (ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                _context.Add(subscription);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(subscription);
+        }
+
+        // GET: Settings/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
             }
 
+            var subscription = await _context.Subscriptions.FindAsync(id);
+            if (subscription == null)
+            {
+                return NotFound();
+            }
+            return View(subscription);
+        }
+
+        // POST: Settings/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Company,ApiKey")] Subscription subscription)
+        {
             if (id != subscription.Id)
             {
-                return BadRequest();
+                return NotFound();
             }
 
-            _context.Entry(subscription).State = EntityState.Modified;
-
-            try
+            if (ModelState.IsValid)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!SubscriptionExists(id))
+                try
                 {
-                    return NotFound();
+                    _context.Update(subscription);
+                    await _context.SaveChangesAsync();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    if (!SubscriptionExists(subscription.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
+                return RedirectToAction(nameof(Index));
             }
-
-            return NoContent();
+            return View(subscription);
         }
 
-        // POST: api/Settings
-        [HttpPost]
-        public async Task<IActionResult> PostSubscription([FromBody] Subscription subscription)
+        // GET: Settings/Delete/5
+        public async Task<IActionResult> Delete(int? id)
         {
-            if (!ModelState.IsValid)
+            if (id == null)
             {
-                return BadRequest(ModelState);
+                return NotFound();
             }
 
-            _context.Subscriptions.Add(subscription);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetSubscription", new { id = subscription.Id }, subscription);
-        }
-
-        // DELETE: api/Settings/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSubscription([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var subscription = await _context.Subscriptions.FindAsync(id);
+            var subscription = await _context.Subscriptions
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (subscription == null)
             {
                 return NotFound();
             }
 
+            return View(subscription);
+        }
+
+        // POST: Settings/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var subscription = await _context.Subscriptions.FindAsync(id);
             _context.Subscriptions.Remove(subscription);
             await _context.SaveChangesAsync();
-
-            return Ok(subscription);
+            return RedirectToAction(nameof(Index));
         }
 
         private bool SubscriptionExists(int id)
