@@ -16792,8 +16792,7 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
 
 @font-face {
     font-family: 'et-line';
-    src: url("fonts/et-line.html");
-    src: url("fonts/et-lined41d.html?#iefix") format("embedded-opentype"),url("fonts/et-line-2.html") format("woff"),url("fonts/et-line-3.html") format("truetype"),url("fonts/et-line-4.html#et-line") format("svg");
+    src: url("fonts/et-line");
     font-weight: normal;
     font-style: normal
 }
