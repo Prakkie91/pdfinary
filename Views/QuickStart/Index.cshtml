@@ -16,44 +16,54 @@
                 </div>
             </div>
             <div class="grid-body">
-                <div class="scroller scrollbar-hidden" data-height="220px">
+                <div >
                     <h3>Render PDF from <span class="semi-bold">Url</span></h3>
                     <p>The simplest way to render a PDF is to create is to simply pass the url to convert to pdf.</p>
-                    <form href="http://pdfinary.com/api/Render/RenderUrl" method="get">
+                    <form target="_blank" action="http://pdfinary.com/api/Render/RenderUrl" method="get">
                         <input name="key" type="hidden" value="@subscription.ApiKey">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label">Url</label><span class="help">e.g. "https://google.co.za"</span>
                                     <div class="input-with-icon right">
-                                        <input class="form-control" name="url" type="url" required>
+                                        <input class="form-control" name="url" type="url" value="https://google.co.za" required>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <input name="scale" class="form-control" value="0.7" />
+                                <div class="form-group">
+                                    <label class="form-label">Scale</label>
+                                    <input name="scale" class="form-control" value="0.7" />
+                                </div>
                             </div>
                             <div class="col-md-3">
-                                <label class="form-label">Scroll Page</label><span class="help">should the renderer scroll the url</span>
-                                <select name="scrollPage" class="form-control">
-                                    <option value="true">True</option>
-                                    <option value="false">False</option>
-                                </select>
+                                <div class="form-group">
+                                    <label class="form-label">Scroll Page</label>
+                                    <select name="scrollPage" class="form-control">
+                                        <option value="true">True</option>
+                                        <option value="false">False</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                      
+
                         <div class="row">
                             <div class="col-md-3">
-                                <label class="form-label">Emulate Screen Media</label><span class="help">should the screen media version or print version of the page.</span>
-                                <select name="emulateScreenMedia" class="form-control">
-                                    <option value="true">True</option>
-                                    <option value="false">False</option>
-                                </select>
-                            </div>
-                         
-                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-primary">Render</button>
+                                    <label class="form-label">Emulate Screen Media</label>
+                                    <select name="emulateScreenMedia" class="form-control">
+                                        <option value="true">True</option>
+                                        <option value="false">False</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                           
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-warning">Render</button>
                                 </div>
                             </div>
                         </div>
