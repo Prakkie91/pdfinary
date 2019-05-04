@@ -88,7 +88,7 @@ namespace Pdfinary.Controllers
                 {
                     MemoryStream pdfMemoryStream = new MemoryStream(client.DownloadData($"https://pdf-render-pdfinary.herokuapp.com/api/render?url={parsedUrl}&scrollPage={scrollPage}&emulateScreenMedia={emulateScreenMedia}&pdf.scale={scale}"));
 
-                    _blobStorageService.UploadFileAsync(pdfMemoryStream, filename);
+                    await _blobStorageService.UploadFileAsync(pdfMemoryStream, filename);
 
 
                     return new FileStreamResult(pdfMemoryStream, "application/pdf");
@@ -140,7 +140,7 @@ namespace Pdfinary.Controllers
 
                     MemoryStream pdfMemoryStream = new MemoryStream(client.DownloadData($"https://pdf-render-pdfinary.herokuapp.com/api/render?url={urlOut}&scrollPage=true&emulateScreenMedia=true&pdf.scale=0.7"));
 
-                    _blobStorageService.UploadFileAsync(pdfMemoryStream, filename);
+                    await _blobStorageService.UploadFileAsync(pdfMemoryStream, filename);
 
                     return new FileStreamResult(pdfMemoryStream, "application/pdf");
                 }
