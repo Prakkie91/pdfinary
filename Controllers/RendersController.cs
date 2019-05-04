@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Pdfinary.Data;
 using Pdfinary.Models;
@@ -7,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Pdfinary.Controllers
 {
-    public class RendersController : Controller
+    public class RendersController : BaseController
     {
         private readonly ApplicationDbContext _context;
 
-        public RendersController(ApplicationDbContext context)
+        public RendersController(ApplicationDbContext context, IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
         {
             _context = context;
         }

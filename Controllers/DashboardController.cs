@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Pdfinary.Data;
 using Pdfinary.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Pdfinary.Controllers
 {
-    public class DashboardController : Controller
+    public class DashboardController : BaseController
     {
         private readonly ApplicationDbContext _context;
 
-        public DashboardController(ApplicationDbContext context)
+        public DashboardController(ApplicationDbContext context, IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
         {
             _context = context;
         }
@@ -22,8 +20,13 @@ namespace Pdfinary.Controllers
         // GET: Dashboard
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Renders.Include(r => r.Template);
-            return View(await applicationDbContext.ToListAsync());
+            Subscription subscription = _context.Subscriptions.FirstOrDefault(a => a.Id == _subscriptionId);
+
+            ViewBag.Subscription = subscription;
+
+            System.Collections.Generic.List<Render> renders = _context.Renders.Include(r => r.Template).ToList();
+
+            return View(renders);
         }
 
     }

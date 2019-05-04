@@ -39,12 +39,37 @@ namespace Pdfinary
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<ApplicationUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddIdentity<ApplicationUser, IdentityRole>(
+                         options =>
+                         {
+                             options.Password.RequireDigit = false;
+                             options.Password.RequiredLength = 3;
+                             options.Password.RequireLowercase = false;
+                             options.Password.RequireNonAlphanumeric = false;
+                             options.Password.RequireUppercase = false;
+                         }
+                         )
+                         .AddEntityFrameworkStores<ApplicationDbContext>()
+                         .AddDefaultUI()
+                         .AddDefaultTokenProviders();
+
+            services.AddMemoryCache();
 
             services.AddTransient<BlobStorageService>();
 
+            services.AddCors();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.AddSession(o =>
+            {
+                o.Cookie.SecurePolicy = CookieSecurePolicy.None;
+                o.Cookie.Name = "Pdfinary.Session";
+                o.IdleTimeout = TimeSpan.FromDays(30);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,9 +86,13 @@ namespace Pdfinary
                 app.UseHsts();
             }
 
+            app.UseSession();
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseCookiePolicy();
+
+            app.UseCors(builder =>
+             builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
             app.UseAuthentication();
 

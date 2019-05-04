@@ -82,7 +82,7 @@ namespace Pdfinary.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    var key = new byte[32];
+                    var key = new byte[15];
                     using (var generator = RandomNumberGenerator.Create())
                         generator.GetBytes(key);
                     string apiKey = Convert.ToBase64String(key);

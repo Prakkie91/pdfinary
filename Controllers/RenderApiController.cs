@@ -55,7 +55,7 @@ namespace Pdfinary.Controllers
 
                 string parsedUrl = $"{tmp.Scheme}://{tmp.Host}{tmp.AbsolutePath}{tmp.Query}";
 
-                byte[] randomKey = new byte[32];
+                byte[] randomKey = new byte[15];
                 using (RandomNumberGenerator generator = RandomNumberGenerator.Create())
                 {
                     generator.GetBytes(randomKey);
@@ -104,7 +104,7 @@ namespace Pdfinary.Controllers
             {
                 Subscription subscription = _context.Subscriptions.FirstOrDefault(a => a.ApiKey == data.Key);
 
-                byte[] randomKey = new byte[32];
+                byte[] randomKey = new byte[15];
                 using (RandomNumberGenerator generator = RandomNumberGenerator.Create())
                 {
                     generator.GetBytes(randomKey);

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Pdfinary.Models
 {
@@ -11,5 +8,6 @@ namespace Pdfinary.Models
         public string Company { get; set; }
 
         public string ApiKey { get; set; }
+        public ICollection<Render> Renders { get; set; }
     }
 }

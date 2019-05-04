@@ -2,10 +2,22 @@
 
 @{
     ViewData["Title"] = "DASHBOARD";
+
+    var subscription = (Subscription)ViewBag.Subscription;
 }
 
 <div class="row">
     <div class="col-md-4">
+        <div class="tiles white  m-b-10">
+            <div class="tiles-body">
+                <div class="controller">
+                    <a href="javascript:;" class="reload"></a>
+                    <a href="javascript:;" class="remove"></a>
+                </div>
+                <h2 class="text-black bold "><span>@subscription.Company</span></h2>
+                <h6 class="text-black semi-bold  "><strong>API KEY: @subscription.ApiKey</strong></h6>
+            </div>
+        </div>
         <div class="tiles blue    m-b-10">
             <div class="tiles-body">
                 <div class="controller">
