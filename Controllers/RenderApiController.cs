@@ -7,10 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Pdfinary.Data;
 using Pdfinary.Models;
+using Pdfinary.Models.ApiModels;
 
 namespace Pdfinary.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Render")]
     [ApiController]
     public class RenderApiController : ControllerBase
     {
@@ -33,99 +34,24 @@ namespace Pdfinary.Controllers
             return _context.Renders;
         }
 
+
         // GET: api/RenderApi/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetRender([FromRoute] int id)
+        [HttpGet("RenderUrl")]
+        public async Task<IActionResult> RenderUrl(string url, string key)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+         
 
-            var render = await _context.Renders.FindAsync(id);
-
-            if (render == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(render);
+            return Ok();
         }
 
         // PUT: api/RenderApi/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutRender([FromRoute] int id, [FromBody] Render render)
+        [HttpPost("RenderTemplate")]
+        public async Task<IActionResult> RenderTemplate([FromRoute] int id, [FromBody] RenderTemplateRequest render)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != render.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(render).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RenderExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+         
 
             return NoContent();
         }
 
-        // POST: api/RenderApi
-        [HttpPost]
-        public async Task<IActionResult> PostRender([FromBody] Render render)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            _context.Renders.Add(render);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetRender", new { id = render.Id }, render);
-        }
-
-        // DELETE: api/RenderApi/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteRender([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var render = await _context.Renders.FindAsync(id);
-            if (render == null)
-            {
-                return NotFound();
-            }
-
-            _context.Renders.Remove(render);
-            await _context.SaveChangesAsync();
-
-            return Ok(render);
-        }
-
-        private bool RenderExists(int id)
-        {
-            return _context.Renders.Any(e => e.Id == id);
-        }
     }
 }
