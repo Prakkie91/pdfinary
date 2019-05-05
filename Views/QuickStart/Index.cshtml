@@ -16,7 +16,7 @@
                 </div>
             </div>
             <div class="grid-body">
-                <div >
+                <div>
                     <h3>Render PDF from <span class="semi-bold">Url</span></h3>
                     <p>The simplest way to render a PDF is to create is to simply pass the url to convert to pdf.</p>
                     <form target="_blank" action="http://pdfinary.com/api/Render/RenderUrl" method="get">
@@ -58,7 +58,7 @@
                                 </div>
                             </div>
 
-                           
+
                         </div>
                         <div class="row">
                             <div class="col-md-12">
@@ -86,12 +86,88 @@
                 </div>
             </div>
             <div class="grid-body">
-                <div class="scroller scrollbar-hidden" data-height="220px">
-                    <h3>Scroll is <span class="semi-bold">hidden</span></h3>
-                    <h4><span class="semi-bold">Open Me</span>, Light , <span class="semi-bold">Bold</span> , <i>Everything</i></h4>
-                    <p>The overflow is clipped, and the rest of the content will be invisible, Play it ». scroll, The overflow is clipped, but a scroll-bar is added to see the rest of the </p>
-                    <p> default, the textarea element comes with a vertical scrollbar (and maybe even a horizontal scrollbar). This vertical scrollbar enables the user to continue entering and reviewing their text (by scrolling up and down).</p>
-                    <p>The scroll event is sent to an element when the user scrolls to a different place in the element. It applies to window objects, but also to scrollable frames and elements with the overflow CSS property set to scroll (or auto when the element's explicit height or width is less than the height or width of its contents).</p>
+                <h3>Render PDF from <span class="semi-bold">submitted HTML form</span></h3>
+                <p>Generate pdf's from submitted html forms. Using handlebars in your template allows you to access the data submitted in the form.</p>
+                <div class="row" style="background-color:whitesmoke;padding:20px 10px;margin-top:25px!important">
+                    <div class="col-md-5">
+                        <h4>Form Example:</h4>
+                        <hr />
+                        <div class="p-l-5 p-t-10">
+                            <form>
+                                <input name="key" type="hidden" value="@subscription.ApiKey">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Name</label>
+                                            <input name="Name" placeholder="Name" class="form-control" value="John">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Surname</label>
+                                            <input name="Surname" placeholder="Surname" class="form-control" value="Doe">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="form-label">Address</label>
+                                            <input name="Address" placeholder="Address" class="form-control" value="699 Bryson Ave">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">City</label>
+                                            <input name="City" placeholder="City" class="form-control" value="Palo Alto">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Country</label>
+                                            <input name="Country" placeholder="Country" class="form-control" value="USA">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <button class="btn btn-success" type="submit">Test</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="p-l-5 p-t-5">
+                            <h5>Form code</h5>
+                            <div id="snippet">
+                                <pre>
+                                <code class="html">
+ &lt;form&gt;
+     &lt;input name=&quot;Key&quot; value=&quot;@subscription.ApiKey&quot; /&gt;
+     &lt;input name=&quot;Name&quot; /&gt;
+     &lt;input name=&quot;Surname&quot; /&gt;
+     &lt;input name=&quot;Address&quot; /&gt;
+     &lt;input name=&quot;City&quot; /&gt;
+     &lt;input name=&quot;Country&quot; /&gt;
+     &lt;button type=&quot;submit&quot;&gt;Test&lt;/button&gt;
+ &lt;/form&gt;
+                                    </code></pre>
+                            </div>
+                        </div>
+                        <div class="p-l-5 p-t-10">
+                            <h5>Template code</h5>
+                            <div id="snippet">
+                                <pre>
+                                <code class="html">
+ &lt;h1&gt;{{Name}} {{Surname}}&lt;/h1&gt;
+ &lt;h2&gt;{{Address}}, {{City}}, {{Country}} &lt;/h2&gt;
+                                    </code></pre>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -121,3 +197,8 @@
         </div>
     </div>
 </div>
+@section Scripts{
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/atom-one-dark.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+}
