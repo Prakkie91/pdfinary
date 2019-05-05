@@ -105,9 +105,10 @@ namespace Pdfinary.Controllers
 
                     using (WebClient client = new WebClient())
                     {
-                        MemoryStream pdfMemoryStream = new MemoryStream(client.DownloadData($"https://pdf-render-pdfinary.herokuapp.com/api/render?url={parsedUrl}&scrollPage={scrollPage}&emulateScreenMedia={emulateScreenMedia}&pdf.scale={scale}&pdf.format={format}&pdf.landscape={landscape}"));
-
-                        pdfMemoryStream.Position = 0;
+                        MemoryStream pdfMemoryStream = new MemoryStream(client.DownloadData($"https://pdf-render-pdfinary.herokuapp.com/api/render?url={parsedUrl}&scrollPage={scrollPage}&emulateScreenMedia={emulateScreenMedia}&pdf.scale={scale}&pdf.format={format}&pdf.landscape={landscape}"))
+                        {
+                            Position = 0
+                        };
 
                         return new FileStreamResult(pdfMemoryStream, "application/pdf");
                     }
@@ -155,11 +156,13 @@ namespace Pdfinary.Controllers
                 _context.Renders.Add(render);
                 _context.SaveChanges();
 
+                Template template = _context.Templates.FirstOrDefault(a => a.Id == data.TemplateId);
+
                 using (WebClient client = new WebClient())
                 {
                     string urlOut = $"http://pdfinary.com/Renders/Preview/{render.Id}";
 
-                    MemoryStream pdfMemoryStream = new MemoryStream(client.DownloadData($"https://pdf-render-pdfinary.herokuapp.com/api/render?url={urlOut}&scrollPage=true&emulateScreenMedia=true&pdf.scale=0.7"));
+                    MemoryStream pdfMemoryStream = new MemoryStream(client.DownloadData($"https://pdf-render-pdfinary.herokuapp.com/api/render?url={urlOut}&scrollPage={template.ScrollPage}&emulateScreenMedia={template.EmulateScreenMedia}&pdf.scale={template.Scale}&pdf.format={template.PageFormat}&pdf.landscape={template.IsLandscape}"));
 
                     await _blobStorageService.UploadFileAsync(pdfMemoryStream, filename);
 
