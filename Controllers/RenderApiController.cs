@@ -103,7 +103,7 @@ namespace Pdfinary.Controllers
 
                     using (WebClient client = new WebClient())
                     {
-                        MemoryStream pdfMemoryStream = new MemoryStream(client.DownloadData($"https://pdf-render-pdfinary.herokuapp.com/api/render?url={parsedUrl}&scrollPage={scrollPage}&emulateScreenMedia={emulateScreenMedia}&pdf.scale={scale}&pdf.format={format}&pdf.landscape={landscape}&pdf.pageRanges={pageRanges}"));
+                        MemoryStream pdfMemoryStream = new MemoryStream(client.DownloadData($"https://pdf-render-pdfinary.herokuapp.com/api/render?url={parsedUrl}&scrollPage={scrollPage}&emulateScreenMedia={emulateScreenMedia}&pdf.scale={scale}&pdf.format={format}&pdf.landscape={landscape}"));
 
                         pdfMemoryStream.Position = 0;
 
