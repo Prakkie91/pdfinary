@@ -15,8 +15,9 @@ using System.Threading.Tasks;
 
 namespace Pdfinary.Controllers
 {
-    [Route("api/Render")]
+    [Route("api/Render/[action]")]
     [ApiController]
+    [Produces("application/json")]
     public class RenderApiController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -119,9 +120,9 @@ namespace Pdfinary.Controllers
             }
         }
 
-        // PUT: api/RenderApi/5
-        [HttpPost("RenderTemplate")]
-        public async Task<IActionResult> RenderTemplate([FromBody] RenderTemplateRequest data)
+        [HttpPost]
+        [ActionName("RenderTemplate")]
+        public async Task<IActionResult> RenderTemplate(RenderTemplateRequest data)
         {
             try
             {

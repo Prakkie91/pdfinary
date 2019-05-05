@@ -1,8 +1,7 @@
-﻿@model string
-
-@{
+﻿@{
     ViewData["Title"] = "Render";
     Layout = "";
+
 }
 
-@Html.Raw(Model)
+@Html.Raw(ViewBag.TemplateHtml)
