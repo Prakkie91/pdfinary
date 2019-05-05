@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using HandlebarsDotNet;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Pdfinary.Data;
 using Pdfinary.Models;
 using System.Linq;
@@ -29,7 +31,11 @@ namespace Pdfinary.Controllers
         {
             Render render = _context.Renders.Include(a => a.Template).FirstOrDefault(a => a.Id == id);
 
-            ViewBag.TemplateHtml = render.Template.ProductionHtml;
+            System.Func<object, string> template = Handlebars.Compile(render.Template.ProductionHtml);
+
+            object data = JsonConvert.DeserializeObject(render.Data);
+
+            ViewBag.TemplateHtml = template(data); ;
 
             return View();
 
