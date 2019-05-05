@@ -50,23 +50,37 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label class="form-label">Emulate Screen Media</label>
+                                    <label class="form-label">Screen Media</label>
                                     <select name="emulateScreenMedia" class="form-control">
                                         <option value="true">True</option>
                                         <option value="false">False</option>
                                     </select>
                                 </div>
                             </div>
-
-
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-3">
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-warning">Render</button>
+                                    <label class="form-label">Page Format</label>
+                                    <select name="format" class="form-control">
+                                        <option value="A4">A4</option>
+                                        <option value="A5">A5</option>
+                                    </select>
                                 </div>
                             </div>
-                        </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="form-label">Orientation</label>
+                                    <select name="landscape" class="form-control">
+                                        <option value="false">Portrait</option>
+                                        <option value="true">Landscape</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group" style="padding-top:32px;padding-left:10px;padding-right:10px">
+                                    <button type="submit" style="width:100%" class="btn btn-warning btn-round">Render</button>
+                                </div>
+                            </div>
+                        </div>                    
                     </form>
                 </div>
             </div>
@@ -259,7 +273,7 @@ var settings = {
   &quot;headers&quot;: {
     &quot;Content-Type&quot;: &quot;application/json&quot;,
   },
-  &quot;data&quot;: &quot;{Key:\&quot;5nM7LHljIDXk089Fm9v\&quot;, TemplateId :11, Data : { \&quot;Name\&quot;:\&quot;John\&quot;, \&quot;Surname\&quot;:\&quot;Doe\&quot;, \&quot;Address\&quot;:\&quot;699 Bryson Ave\&quot;, \&quot;City\&quot;:\&quot;Palo Alto\&quot;, \&quot;Country\&quot;:\&quot;USA\&quot;}}&quot;
+  &quot;data&quot;: &quot;{ Key:&#39;5nM7LHljIDXk089Fm9v&#39;, TemplateId :11,	Data : { &#39;Name&#39;:&#39;John&#39;, &#39;Surname&#39;:&#39;Doe&#39;, &#39;Address&#39;:&#39;699 Bryson Ave&#39;, &#39;City&#39;:&#39;Palo Alto&#39;, &#39;Country&#39;:&#39;USA&#39;}}&quot;
 }
 
 $.ajax(settings).done(function (response) {

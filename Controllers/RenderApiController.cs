@@ -41,7 +41,8 @@ namespace Pdfinary.Controllers
             return _context.Renders;
         }
 
-        [HttpGet("RenderUrl")]
+        [HttpGet]
+        [ActionName("RenderUrl")]
         public async Task<IActionResult> RenderUrl(string url, string key, bool storeBlob = true, bool scrollPage = false, bool emulateScreenMedia = true, double scale = 1, int pageRanges = 0, string format = "A4", bool landscape = false)
         {
             try
