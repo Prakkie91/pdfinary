@@ -71,6 +71,11 @@ namespace Pdfinary.Controllers
         {
             if (ModelState.IsValid)
             {
+                template.EmulateScreenMedia = true;
+                template.IsLandscape = true;
+                template.PageFormat = "A4";
+                template.Scale = 0.7;
+                template.ScrollPage = true;
                 template.SubscriptionId = _subscriptionId;
                 _context.Add(template);
                 await _context.SaveChangesAsync();

@@ -13,6 +13,12 @@ namespace Pdfinary.Models
         public string Name { get; set; }
         public string Description { get; set; }
 
+        public double Scale { get; set; }
+        public bool ScrollPage { get; set; }
+        public bool EmulateScreenMedia { get; set; }
+        public string PageFormat { get; set; }
+        public bool IsLandscape { get; set; }
+
         public string ProductionHtml { get; set; }
         public string DraftHtml { get; set; }
 

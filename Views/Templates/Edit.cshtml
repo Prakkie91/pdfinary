@@ -23,7 +23,7 @@
                             <input type="hidden" asp-for="SubscriptionId" />
                             <input type="hidden" asp-for="Id" />
                             <input type="hidden" asp-for="ProductionHtml" />
-                            <input type="hidden" asp-for="DraftHtml" id="DraftHtml"/>
+                            <input type="hidden" asp-for="DraftHtml" id="DraftHtml" />
                             <div class="form-group">
                                 <label asp-for="Name" class="control-label"></label>
                                 <input asp-for="Name" class="form-control" />
@@ -34,6 +34,44 @@
                                 <textarea asp-for="Description" class="form-control"></textarea>
                                 <span asp-validation-for="Description" class="text-danger"></span>
                             </div>
+                            <div class="form-group">
+                                <label class="form-label">Scale</label>
+                                <input asp-for="Scale" class="form-control" />
+                                <span asp-validation-for="Scale" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Scroll Page</label>
+                                <select asp-for="ScrollPage" class="form-control">
+                                    <option value="true">True</option>
+                                    <option value="false">False</option>
+                                </select>
+                                <span asp-validation-for="ScrollPage" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Emulate Screen Media</label>
+                                <select asp-for="EmulateScreenMedia" class="form-control">
+                                    <option value="true">True</option>
+                                    <option value="false">False</option>
+                                </select>
+                                <span asp-validation-for="EmulateScreenMedia" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Page Format</label>
+                                <select asp-for="PageFormat" class="form-control">
+                                    <option value="A4">A4</option>
+                                    <option value="A5">A5</option>
+                                </select>
+                                <span asp-validation-for="PageFormat" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Orientation</label>
+                                <select asp-for="IsLandscape" class="form-control">
+                                    <option value="false">Portrait</option>
+                                    <option value="true">Landscape</option>
+                                </select>
+                                <span asp-validation-for="IsLandscape" class="text-danger"></span>
+                            </div>
+
                             <div class="form-group">
                                 <input type="submit" value="Save" class="btn btn-default" />
                             </div>
