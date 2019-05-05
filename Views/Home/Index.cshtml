@@ -89,6 +89,7 @@
                     <div class="col-lg-8 mx-auto mb-7" style="background-color:aliceblue;border-radius: 25px;padding:25px">
                         <form target="_blank" action="http://pdfinary.com/api/Render/RenderUrl" method="get">
                             <input name="key" type="hidden" value="Gyo5WgXCtxoVyv">
+                            <input name="storeBlob" type="hidden" value="false">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -128,7 +129,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="form-label">Page Format</label>
-                                        <select name="pageFormat" class="form-control">
+                                        <select name="format" class="form-control">
                                             <option value="A4">A4</option>
                                             <option value="A5">A5</option>
                                         </select>
@@ -137,9 +138,9 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="form-label">Orientation</label>
-                                        <select name="orientation" class="form-control">
-                                            <option value="Portrait">Portrait</option>
-                                            <option value="Landscape">Landscape</option>
+                                        <select name="landscape" class="form-control">
+                                            <option value="false">Portrait</option>
+                                            <option value="true">Landscape</option>
                                         </select>
                                     </div>
                                 </div>
@@ -149,7 +150,7 @@
                                     </div>
                                 </div>
                             </div>
-                           
+
                         </form>
                     </div>
 

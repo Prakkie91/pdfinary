@@ -41,7 +41,7 @@ namespace Pdfinary.Controllers
         }
 
         [HttpGet("RenderUrl")]
-        public async Task<IActionResult> RenderUrl(string url, string key, bool scrollPage = true, bool emulateScreenMedia = true, double scale = 0.7)
+        public async Task<IActionResult> RenderUrl(string url, string key, bool storeBlob = true, bool scrollPage = false, bool emulateScreenMedia = true, double scale = 1, int pageRanges = 0, string format = "A4", bool landscape = false)
         {
             try
             {
@@ -56,44 +56,62 @@ namespace Pdfinary.Controllers
 
                 string parsedUrl = $"{tmp.Scheme}://{tmp.Host}{tmp.AbsolutePath}{tmp.Query}";
 
-                byte[] randomKey = new byte[15];
-                using (RandomNumberGenerator generator = RandomNumberGenerator.Create())
+
+                if (storeBlob)
                 {
-                    generator.GetBytes(randomKey);
-                }
-
-                string randomFileName = Convert.ToBase64String(randomKey);
-
-                Regex rgx = new Regex("[^a-zA-Z0-9 -]");
-                randomFileName = rgx.Replace(randomFileName, "");
-
-                string filename = $"{randomFileName}.pdf";
-
-                Render render = new Render()
-                {
-                    CreateDate = DateTime.UtcNow,
-                    Data = JsonConvert.SerializeObject(new
+                    byte[] randomKey = new byte[15];
+                    using (RandomNumberGenerator generator = RandomNumberGenerator.Create())
                     {
-                        Url = url
-                    }),
-                    RenderType = RenderType.Url,
-                    SubscriptionId = subscription.Id,
-                    BlobUrl = $"https://pdfinary.blob.core.windows.net/pdfinary/{filename}"
-                };
+                        generator.GetBytes(randomKey);
+                    }
 
-                _context.Renders.Add(render);
-                _context.SaveChanges();
+                    string randomFileName = Convert.ToBase64String(randomKey);
 
-                using (WebClient client = new WebClient())
-                {
-                    MemoryStream pdfMemoryStream = new MemoryStream(client.DownloadData($"https://pdf-render-pdfinary.herokuapp.com/api/render?url={parsedUrl}&scrollPage={scrollPage}&emulateScreenMedia={emulateScreenMedia}&pdf.scale={scale}"));
+                    Regex rgx = new Regex("[^a-zA-Z0-9 -]");
+                    randomFileName = rgx.Replace(randomFileName, "");
 
-                    await _blobStorageService.UploadFileAsync(pdfMemoryStream, filename);
+                    string filename = $"{randomFileName}.pdf";
 
-                    pdfMemoryStream.Position = 0;
+                    Render render = new Render()
+                    {
+                        CreateDate = DateTime.UtcNow,
+                        Data = JsonConvert.SerializeObject(new
+                        {
+                            Url = url
+                        }),
+                        RenderType = RenderType.Url,
+                        SubscriptionId = subscription.Id,
+                        BlobUrl = $"https://pdfinary.blob.core.windows.net/pdfinary/{filename}"
+                    };
 
-                    return new FileStreamResult(pdfMemoryStream, "application/pdf");
+                    _context.Renders.Add(render);
+                    _context.SaveChanges();
+
+                    using (WebClient client = new WebClient())
+                    {
+                        MemoryStream pdfMemoryStream = new MemoryStream(client.DownloadData($"https://pdf-render-pdfinary.herokuapp.com/api/render?url={parsedUrl}&scrollPage={scrollPage}&emulateScreenMedia={emulateScreenMedia}&pdf.scale={scale}&pdf.format={format}&pdf.landscape={landscape}&pdf.pageRanges={pageRanges}"));
+
+                        await _blobStorageService.UploadFileAsync(pdfMemoryStream, filename);
+
+                        pdfMemoryStream.Position = 0;
+
+                        return new FileStreamResult(pdfMemoryStream, "application/pdf");
+                    }
                 }
+                else
+                {
+
+                    using (WebClient client = new WebClient())
+                    {
+                        MemoryStream pdfMemoryStream = new MemoryStream(client.DownloadData($"https://pdf-render-pdfinary.herokuapp.com/api/render?url={parsedUrl}&scrollPage={scrollPage}&emulateScreenMedia={emulateScreenMedia}&pdf.scale={scale}&pdf.format={format}&pdf.landscape={landscape}&pdf.pageRanges={pageRanges}"));
+
+                        pdfMemoryStream.Position = 0;
+
+                        return new FileStreamResult(pdfMemoryStream, "application/pdf");
+                    }
+
+                }
+
             }
             catch (Exception ex)
             {
