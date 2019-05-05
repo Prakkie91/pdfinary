@@ -186,12 +186,90 @@
                 </div>
             </div>
             <div class="grid-body">
-                <div class="scroller scrollbar-hidden" data-height="220px">
-                    <h3>Scroll is <span class="semi-bold">hidden</span></h3>
-                    <h4><span class="semi-bold">Open Me</span>, Light , <span class="semi-bold">Bold</span> , <i>Everything</i></h4>
-                    <p>The overflow is clipped, and the rest of the content will be invisible, Play it ». scroll, The overflow is clipped, but a scroll-bar is added to see the rest of the </p>
-                    <p> default, the textarea element comes with a vertical scrollbar (and maybe even a horizontal scrollbar). This vertical scrollbar enables the user to continue entering and reviewing their text (by scrolling up and down).</p>
-                    <p>The scroll event is sent to an element when the user scrolls to a different place in the element. It applies to window objects, but also to scrollable frames and elements with the overflow CSS property set to scroll (or auto when the element's explicit height or width is less than the height or width of its contents).</p>
+                <h3>Render PDF programatically based on your <span class="semi-bold">templates</span></h3>
+                <p>Generate pdf's using api requests. Using handlebars in your template allows you to access the data submitted in the api.</p>
+                <div class="col-md-12" style="margin-top:15px">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="active">
+                            <a href="#tab1hellowWorld" role="tab" data-toggle="tab">C#</a>
+                        </li>
+                        <li>
+                            <a href="#tab1FollowUs" role="tab" data-toggle="tab">Python</a>
+                        </li>
+                        <li>
+                            <a href="#tab1Inspire" role="tab" data-toggle="tab">Javascript</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab1hellowWorld">
+                            <div class="row column-seperation">
+                                <div id="snippet">
+                                    <pre>
+                                    <code class="C#">
+var client = new RestClient(&quot;http://pdfinary.com/api/Render/RenderTemplate&quot;);
+var request = new RestRequest(Method.POST);
+
+request.AddHeader(&quot;Content-Type&quot;, &quot;application/json&quot;);
+request.AddBody(new {
+                     Key = &quot;5nM7LHljIDXk089Fm9v&quot;,
+                     TemplateId  = 11,
+                     Data = new Dictionary&lt;string, object&gt;(){
+                                            {&quot;Name&quot;,&quot;John&quot;},
+                                            {&quot;Surname&quot;,&quot;Doe&quot;},
+                                            {&quot;Address&quot;,&quot;699 Bryson Ave&quot;},
+                                            {&quot;City&quot;,&quot;Palo Alto&quot;},
+                                            {&quot;Country&quot;,&quot;USA&quot;}
+                                        }
+                     });
+
+IRestResponse response = client.Execute(request);
+                                    </code></pre>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab1FollowUs">
+                            <div class="row">
+                                <div id="snippet">
+                                    <pre>
+                                    <code class="python">
+import requests
+
+url = &quot;http://pdfinary.com/api/Render/RenderTemplate&quot;
+
+payload = &quot;{Key:&#39;5nM7LHljIDXk089Fm9v&#39;,TemplateId :11,Data : {  &#39;Name&#39;:&#39;John&#39;,&#39;Surname&#39;:&#39;Doe&#39;,&#39;Address&#39;:&#39;699 Bryson Ave&#39;,&#39;City&#39;:&#39;Palo Alto&#39;,&#39;Country&#39;:&#39;USA&#39;}}&quot;
+headers = {
+    &#39;Content-Type&#39;: &#39;application/json&#39;
+    }
+
+response = requests.request(&quot;POST&quot;, url, data=payload, headers=headers)
+
+print(response.text)
+                                    </code></pre>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab1Inspire">
+                            <div class="row">
+                                <div id="snippet">
+                                    <pre>
+                                    <code class="javascript">
+var settings = {
+  &quot;url&quot;: &quot;http://pdfinary.com/api/Render/RenderTemplate&quot;,
+  &quot;method&quot;: &quot;POST&quot;,
+  &quot;headers&quot;: {
+    &quot;Content-Type&quot;: &quot;application/json&quot;,
+  },
+  &quot;data&quot;: &quot;{\n\tKey:\&quot;5nM7LHljIDXk089Fm9v\&quot;,\n    TemplateId :11,\n\tData : {\n     \&quot;Name\&quot;:\&quot;John\&quot;,\n     \&quot;Surname\&quot;:\&quot;Doe\&quot;,\n     \&quot;Address\&quot;:\&quot;699 Bryson Ave\&quot;,\n     \&quot;City\&quot;:\&quot;Palo Alto\&quot;,\n     \&quot;Country\&quot;:\&quot;USA\&quot;\n\t}\n}&quot;
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+                                    </code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

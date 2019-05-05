@@ -29,7 +29,9 @@ namespace Pdfinary.Controllers
         {
             Render render = _context.Renders.Include(a => a.Template).FirstOrDefault(a => a.Id == id);
 
-            return View(render.Template.ProductionHtml);
+            ViewBag.TemplateHtml = render.Template.ProductionHtml;
+
+            return View();
 
         }
     }
