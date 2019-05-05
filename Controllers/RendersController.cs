@@ -22,7 +22,7 @@ namespace Pdfinary.Controllers
         // GET: Renders
         public async Task<IActionResult> Index()
         {
-            IQueryable<Render> applicationDbContext = _context.Renders.Include(r => r.Template).Where(a => a.SubscriptionId == _subscriptionId);
+            IQueryable<Render> applicationDbContext = _context.Renders.Include(r => r.Template).Where(a => a.SubscriptionId == _subscriptionId).OrderByDescending(a => a.CreateDate).Take(30);
             return View(await applicationDbContext.ToListAsync());
         }
 
