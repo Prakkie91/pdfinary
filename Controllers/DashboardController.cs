@@ -24,7 +24,7 @@ namespace Pdfinary.Controllers
 
             ViewBag.Subscription = subscription;
 
-            System.Collections.Generic.List<Render> renders = _context.Renders.Include(r => r.Template).ToList();
+            System.Collections.Generic.List<Render> renders = _context.Renders.Include(r => r.Template).Where(a => a.SubscriptionId == _subscriptionId).ToList();
 
             return View(renders);
         }

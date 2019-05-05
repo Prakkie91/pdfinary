@@ -23,7 +23,7 @@ namespace Pdfinary.Controllers
         // GET: Templates
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Templates.Include(t => t.Subscription);
+            var applicationDbContext = _context.Templates.Include(t => t.Subscription).Where(a => a.SubscriptionId == _subscriptionId);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -102,7 +102,7 @@ namespace Pdfinary.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,SubscriptionId,Name,Description,ProductionHtml,DraftHtml")] Template template)
+        public async Task<IActionResult> Edit(int id, Template template)
         {
             if (id != template.Id)
             {
@@ -129,7 +129,7 @@ namespace Pdfinary.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SubscriptionId"] = new SelectList(_context.Subscriptions, "Id", "Id", template.SubscriptionId);
+
             return View(template);
         }
 
