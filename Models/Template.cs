@@ -22,6 +22,11 @@ namespace Pdfinary.Models
         public string ProductionHtml { get; set; }
         public string DraftHtml { get; set; }
 
+        public int MarginTop { get; set; }
+        public int MarginBottom { get; set; }
+        public int MarginLeft { get; set; }
+        public int MarginRight { get; set; }
+
         public virtual ICollection<Render> Renders { get; set; }
     }
 }

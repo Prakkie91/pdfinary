@@ -72,7 +72,7 @@ namespace Pdfinary.Controllers
             if (ModelState.IsValid)
             {
                 template.EmulateScreenMedia = true;
-                template.IsLandscape = true;
+                template.IsLandscape = false;
                 template.PageFormat = "A4";
                 template.Scale = 0.7;
                 template.ScrollPage = true;

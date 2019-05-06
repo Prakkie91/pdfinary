@@ -162,7 +162,7 @@ namespace Pdfinary.Controllers
                 {
                     string urlOut = $"http://pdfinary.com/Renders/Preview/{render.Id}";
 
-                    MemoryStream pdfMemoryStream = new MemoryStream(client.DownloadData($"https://pdf-render-pdfinary.herokuapp.com/api/render?url={urlOut}&scrollPage={template.ScrollPage}&emulateScreenMedia={template.EmulateScreenMedia}&pdf.scale={template.Scale}&pdf.format={template.PageFormat}&pdf.landscape={template.IsLandscape}"));
+                    MemoryStream pdfMemoryStream = new MemoryStream(client.DownloadData($"https://pdf-render-pdfinary.herokuapp.com/api/render?url={urlOut}&scrollPage={template.ScrollPage}&emulateScreenMedia={template.EmulateScreenMedia}&pdf.scale={template.Scale}&pdf.format={template.PageFormat}&pdf.landscape={template.IsLandscape}&pdf.margin.top={template.MarginTop}mm&pdf.margin.bottom={template.MarginBottom}mm&pdf.margin.left={template.MarginLeft}mm&pdf.margin.right={template.MarginRight}mm"));
 
                     await _blobStorageService.UploadFileAsync(pdfMemoryStream, filename);
 

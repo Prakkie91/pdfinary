@@ -39,38 +39,89 @@
                                 <input asp-for="Scale" class="form-control" />
                                 <span asp-validation-for="Scale" class="text-danger"></span>
                             </div>
-                            <div class="form-group">
-                                <label class="form-label">Scroll Page</label>
-                                <select asp-for="ScrollPage" class="form-control">
-                                    <option value="true">True</option>
-                                    <option value="false">False</option>
-                                </select>
-                                <span asp-validation-for="ScrollPage" class="text-danger"></span>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Scroll Page</label>
+                                        <select asp-for="ScrollPage" class="form-control">
+                                            <option value="true">True</option>
+                                            <option value="false">False</option>
+                                        </select>
+                                        <span asp-validation-for="ScrollPage" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Emulate Screen Media</label>
+                                        <select asp-for="EmulateScreenMedia" class="form-control">
+                                            <option value="true">True</option>
+                                            <option value="false">False</option>
+                                        </select>
+                                        <span asp-validation-for="EmulateScreenMedia" class="text-danger"></span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label class="form-label">Emulate Screen Media</label>
-                                <select asp-for="EmulateScreenMedia" class="form-control">
-                                    <option value="true">True</option>
-                                    <option value="false">False</option>
-                                </select>
-                                <span asp-validation-for="EmulateScreenMedia" class="text-danger"></span>
+                           
+                           
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Page Format</label>
+                                        <select asp-for="PageFormat" class="form-control">
+                                            <option value="A4">A4</option>
+                                            <option value="A5">A5</option>
+                                        </select>
+                                        <span asp-validation-for="PageFormat" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Orientation</label>
+                                        <select asp-for="IsLandscape" class="form-control">
+                                            <option value="false">Portrait</option>
+                                            <option value="true">Landscape</option>
+                                        </select>
+                                        <span asp-validation-for="IsLandscape" class="text-danger"></span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label class="form-label">Page Format</label>
-                                <select asp-for="PageFormat" class="form-control">
-                                    <option value="A4">A4</option>
-                                    <option value="A5">A5</option>
-                                </select>
-                                <span asp-validation-for="PageFormat" class="text-danger"></span>
+                           
+                           
+                            <h5><strong>Margin</strong> (milimeters)</h5>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Top</label>
+                                        <input asp-for="MarginTop" class="form-control" />
+                                        <span asp-validation-for="MarginTop" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Bottom</label>
+                                        <input asp-for="MarginBottom" class="form-control" />
+                                        <span asp-validation-for="MarginBottom" class="text-danger"></span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label class="form-label">Orientation</label>
-                                <select asp-for="IsLandscape" class="form-control">
-                                    <option value="false">Portrait</option>
-                                    <option value="true">Landscape</option>
-                                </select>
-                                <span asp-validation-for="IsLandscape" class="text-danger"></span>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Left</label>
+                                        <input asp-for="MarginLeft" class="form-control" />
+                                        <span asp-validation-for="MarginLeft" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Right</label>
+                                        <input asp-for="MarginRight" class="form-control" />
+                                        <span asp-validation-for="MarginRight" class="text-danger"></span>
+                                    </div>
+                                </div>
                             </div>
+                            <hr />
 
                             <div class="form-group">
                                 <input type="submit" value="Save" class="btn btn-default" />
