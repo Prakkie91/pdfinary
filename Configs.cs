@@ -7,7 +7,7 @@ namespace Pdfinary
 {
     public static class Configs
     {
-        public static string BlobStorageKey = "DefaultEndpointsProtocol=https;AccountName=pdfinary;AccountKey=QI/ilB/n2J+51kA3VEWW4BrfG7NxWmZ+JsR3szzmM+rcaFXvETDX+OytUgVHcNGikY2IIMFfjhZDb71KrrurbA==;EndpointSuffix=core.windows.net";
+        public static string BlobStorageKey = "DefaultEndpointsProtocol=https;AccountName=pdfinarystorage;AccountKey=5XnX2tR9od891+xn8PfZo//3Fi90oy/ZqDFGs8xy4fTdvKn6VPus12Qaiqn8Bh4ViKNcRpa6Hbn1dwGu6f8ivA==;EndpointSuffix=core.windows.net";
         public static string BlobContainer = "pdfinary";
         public static string SubscriptionIdClaim = "SubscriptionId";
     }

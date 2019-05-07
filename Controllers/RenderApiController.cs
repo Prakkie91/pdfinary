@@ -83,7 +83,7 @@ namespace Pdfinary.Controllers
                         }),
                         RenderType = RenderType.Url,
                         SubscriptionId = subscription.Id,
-                        BlobUrl = $"https://pdfinary.blob.core.windows.net/pdfinary/{filename}"
+                        BlobUrl = $"https://pdfinarystorage.blob.core.windows.net/pdfinary/{filename}"
                     };
 
                     _context.Renders.Add(render);
@@ -150,7 +150,7 @@ namespace Pdfinary.Controllers
                     RenderType = RenderType.Url,
                     SubscriptionId = subscription.Id,
                     TemplateId = data.TemplateId,
-                    BlobUrl = $"https://pdfinary.blob.core.windows.net/pdfinary/{filename}"
+                    BlobUrl = $"https://pdfinarystorage.blob.core.windows.net/pdfinary/{filename}"
                 };
 
                 _context.Renders.Add(render);
