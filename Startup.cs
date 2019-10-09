@@ -70,6 +70,7 @@ namespace Pdfinary
                 o.Cookie.Name = "Pdfinary.Session";
                 o.IdleTimeout = TimeSpan.FromDays(30);
             });
+            services.AddApplicationInsightsTelemetry();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

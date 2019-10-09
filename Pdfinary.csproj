@@ -4,10 +4,13 @@
     <TargetFramework>net461</TargetFramework>
     <DebugType>full</DebugType>
     <UserSecretsId>aspnet-Pdfinary-05778BC8-2958-4000-8B75-8F092D978A85</UserSecretsId>
+    <ApplicationInsightsResourceId>/subscriptions/124225ba-bd44-4187-9849-9c4360124f5d/resourcegroups/pdfinary/providers/microsoft.insights/components/pdfinary</ApplicationInsightsResourceId>
+    <ApplicationInsightsAnnotationResourceId>/subscriptions/124225ba-bd44-4187-9849-9c4360124f5d/resourcegroups/pdfinary/providers/microsoft.insights/components/pdfinary</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Handlebars.Net" Version="1.10.1" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.8.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.1.7" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.CookiePolicy" Version="2.1.2" />
@@ -39,6 +42,10 @@
     <Content Update="Views\Renders\Preview.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
   </ItemGroup>
 
 </Project>
